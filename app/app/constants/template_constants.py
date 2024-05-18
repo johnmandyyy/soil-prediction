@@ -1,5 +1,3 @@
-from datetime import datetime
-from django.shortcuts import render
 from app.builder.template_builder import Builder
 
 LOGIN = (

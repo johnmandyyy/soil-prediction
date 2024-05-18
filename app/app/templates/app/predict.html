@@ -1,0 +1,48 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+
+    <p class="lead fw-bold mb-0 pb-0">
+        <i class="fa-solid fa-question"></i> Predict Image
+    </p>
+    <p class="font-weight-light text-muted">Here you can predict soil
+        images.</p>
+
+    <div class="col-lg-12">
+        <div class="input-group">
+            <input type="file" class="form-control"
+                aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            <button class="btn btn-primary" type="button"
+                id="inputGroupFileAddon04">Predict Image</button>
+        </div>
+    </div>
+
+    <div class="col col-lg-12 mt-3">
+
+        <p class="lead fw-bold mb-0 pb-0">
+            <i class="fa-solid fa-square-poll-vertical"></i> Image Result
+        </p>
+        <p class="font-weight-light text-muted">This is the result of the image
+            predicted.</p>
+
+        <div class="text-right">
+
+            <div class="text-center">
+                <img src="https://gardening.usask.ca/images/how-to/soilhandistock-1325198451.jpg"
+                    class="rounded mb-3"
+                    style="max-width: 224px; max-height: 224px;">
+
+                    <p class="text fw-bold">Category: ?</p>
+                    <p class="text fw-bold">Probability Result: ?</p>
+                   
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

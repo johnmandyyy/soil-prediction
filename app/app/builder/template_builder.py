@@ -3,6 +3,7 @@ from datetime import datetime
 
 class TemplateBuilder:
 
+    """ A template builder class. """
     def __init__(self):
 
         self.__Page = None
@@ -45,6 +46,7 @@ class Builder:
         return self.instance
 
     def render_page(self, request):
+        """ A method to render when there is an error in the page. """
         try:
             print(request, self.Page, self.Title)
             return render(request, self.Page, self.Title)
