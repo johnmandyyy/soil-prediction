@@ -1,0 +1,78 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+
+    <p class="lead fw-bold mb-0 pb-0">
+        Evaluation Metrics:
+    </p>
+
+    <div class="col-lg-3">
+        <div class="card text-dark bg-light mb-3 mt-3 shadow">
+            <center>
+                <div class="card-body">
+                    <h5 class="card-title text-primary"><i class="fa-solid fa-bullseye"></i> Accuraccy</h5>
+                    <h1 class="display-6">100%</h1>
+                    <p class="card-text">The proportion of total predictions that are correct.</p>
+                </div>
+            </center>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card text-dark bg-light mb-3 mt-3 shadow">
+            <center>
+                <div class="card-body">
+                    <h5 class="card-title text-secondary"><i class="fa-solid fa-crosshairs"></i> Precision</h5>
+                    <h1 class="display-6">100%</h1>
+                    <p class="card-text">The proportion of total predictions that are correct.</p>
+                </div>
+            </center>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card text-dark bg-light mb-3 mt-3 shadow">
+            <center>
+                <div class="card-body">
+                    <h5 class="card-title text-success"><i class="fa-solid fa-bookmark"></i> Recall</h5>
+                    <h1 class="display-6">100%</h1>
+                    <p class="card-text">The proportion of actual positives that are correctly identified.</p>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card text-dark bg-light mb-3 mt-3 shadow">
+            <center>
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-scale-balanced"></i> F1 Score</h5>
+                    <h1 class="display-6">100%</h1>
+                    <p class="card-text">The harmonic mean of precision and recall, balancing both metrics.</p>
+                </div>
+            </center>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <p class="lead fw-bold mb-0 pb-0">
+        Confusion Matrix:
+    </p>
+
+    <div class="col-lg-12">
+        <div class="card text-dark bg-light mb-3 mt-3 shadow">
+            <center>
+                <div class="card-body">
+                    <h5 class="card-title text-primary"><i class="fa-solid fa-bullseye"></i> Accuraccy</h5>
+                    <h1 class="display-6">100%</h1>
+                    <p class="card-text">The proportion of total predictions that are correct.</p>
+                </div>
+            </center>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

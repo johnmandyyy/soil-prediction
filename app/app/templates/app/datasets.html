@@ -1,0 +1,57 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+
+    <p class="lead fw-bold mb-0 pb-0">
+        <i class="fa-solid fa-database"></i> Manage Datasets
+    </p>
+    
+
+    <div class="col-lg-12">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary">Add Categorie(s)</button>
+        </div>
+        <table class="table mt-3">
+            <thead>
+                <tr>    
+                    <th scope="col">ID</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Low</td>
+                    <td>
+                        <button class="btn btn-danger text-white">Delete</button>
+                        <button class="btn btn-warning text-white">View Images</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Medium</td>
+                    <td>
+                        <button class="btn btn-danger text-white">Delete</button>
+                        <button class="btn btn-warning text-white">View Images</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>High</td>
+                    <td>
+                        <button class="btn btn-danger text-white">Delete</button>
+                        <button class="btn btn-warning text-white">View Images</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+
+</div>
+
+{% endblock %}
