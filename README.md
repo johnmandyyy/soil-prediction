@@ -1,13 +1,11 @@
 
-# Django Boiler Plate
+# Django Bootstrap Boiler Plate
 
 Inclusions:
 
-
 ## Features
-
-- Bulma CSS Framework
-- Bulma Modals
+- REST-MVT Archicture with (constants, helpers, builder)
+- Bootstrap Framework
 - JQuery 3.6.0
 - Font Awesome 6 Pro
 - Customized CSS For Sidebar
@@ -16,7 +14,5 @@ Inclusions:
 - Vue JS Script
 - Axios
 - Data Tables
-- Encryptable / Decryptable API Tempalte
--
-
+- Encryptable / Decryptable API Template
 
