@@ -4,7 +4,6 @@ from app.helpers.helpers import SerializerHelpers
 from ..api import *
 from django.db import models
 
-
 class APIBuilder:
 
     def __init__(self, model_name: str, app_name: str, model_instance: models) -> None:

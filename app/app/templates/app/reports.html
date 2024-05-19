@@ -1,0 +1,85 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div id="reports">
+
+    <div class="row">
+        <p class="lead fw-bold mb-0 pb-0">
+            <i class="fa-solid fa-brain"></i> Training Report(s)
+        </p>
+
+        <p class="font-weight-light text-muted">Data Interpreation for Summary
+            of the Model.</p>
+
+        <div class="col-lg-12">
+
+            <table class="table mt-3" id="reports-table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Correct Value(s)</th>
+                        <th scope="col">Forecasted Value(s)</th>
+                        <th scope="col">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(objects, index) in prediction_logs"
+                        :key="index">
+                        <td scope="col">[[objects.id]]</td>
+                        <td scope="col">[[objects.correct_answer]]</td>
+                        <td scope="col">[[objects.forecasted]]</td>
+                        <td v-if="objects.remarks === 'CORRECT'" scope="col" class="text-success">
+                            <i class="fa-solid fa-circle-check"></i> [[objects.remarks]]
+                        </td>
+                        <td v-else class="text-danger">
+                            <i class="fa-solid fa-circle-xmark"></i> [[objects.remarks]]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+
+
+new Vue({
+    delimiters: ["[[", "]]"],
+    el: "#reports",
+
+    data: {
+        "prediction_logs": []
+    },
+    mounted() {
+        if (document.querySelector("#reports")) {
+            console.log("Mounted datasets page.")
+            this.getSummary()
+
+            setInterval(function() {
+                $("#reports-table").DataTable();
+            }, 4000);
+
+        }
+    },
+    methods: {
+
+        async getSummary () {
+            axios.get(
+                "/api/list-create/predictionlogs/"
+            ).then((response) => {
+                this.prediction_logs = response.data
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+    },
+});
+</script>
+
+{% endblock %}

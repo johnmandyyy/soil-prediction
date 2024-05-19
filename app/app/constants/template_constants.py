@@ -24,6 +24,13 @@ PREDICTION = (
     .addTitle("Predict Soil Image")
 )
 
+REPORTS = (
+    Builder()
+    .addPage("app/reports.html")
+    .addTitle("Reports")
+)
+
+REPORTS.build()
 PREDICTION.build()
 LOGIN.build()
 INDEX.build()

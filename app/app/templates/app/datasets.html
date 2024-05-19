@@ -2,57 +2,246 @@
 {% load static %}
 {% block content %}
 
-<div class="row">
+<div id="datasets">
 
-    <p class="lead fw-bold mb-0 pb-0">
-        <i class="fa-solid fa-database"></i> Manage Datasets
-    </p>
-    
-    <p class="font-weight-light text-muted">Here you can add/view and delete class/image(s) for predicting soil moisture.</p>
+    <div id="alert-section">
 
-    <div class="col-lg-12">
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-primary">Add Categorie(s)</button>
-        </div>
-        <table class="table mt-3">
-            <thead>
-                <tr>    
-                    <th scope="col">ID</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Low</td>
-                    <td>
-                        <button class="btn btn-danger text-white">Delete</button>
-                        <button class="btn btn-warning text-white">View Images</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Medium</td>
-                    <td>
-                        <button class="btn btn-danger text-white">Delete</button>
-                        <button class="btn btn-warning text-white">View Images</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>High</td>
-                    <td>
-                        <button class="btn btn-danger text-white">Delete</button>
-                        <button class="btn btn-warning text-white">View Images</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
-    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add
+                        Category</h5>
+                </div>
+                <div class="modal-body">
+                    <label class="label mb-2">Category Name:</label>
+                    <input v-model="category_name" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        @click="closeModal('exampleModal')">Close</button>
+                    <button type="button" class="btn btn-primary"
+                        @click="addCategories()">Add Categories</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="showAllImages">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Showing Images</h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div v-for="(objects, index) in folder_medias"
+                            :key="index" class="col col-lg-4">
+                            <div class="card p-0 mb-4">
+                                <img class="card-img-top img-fluid mt-4"
+                                    :src="objects"
+                                    style="max-height: 224px; object-fit: contain;">
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <p class="card-text text-center">[[ objects
+                                        ]]</p>
+                                    <button class="btn btn-danger w-100"><i
+                                        class="fa-solid fa-trash"></i> Delete Selected
+                                        Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        @click="closeModal('showAllImages')">Close Gallery</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <p class="lead fw-bold mb-0 pb-0">
+            <i class="fa-solid fa-database"></i> Manage Datasets
+        </p>
+
+        <p class="font-weight-light text-muted">Here you can add/view and delete
+            class/image(s) for predicting soil moisture.</p>
+
+        <div class="col-lg-12">
+
+            <div class="justify-content-end">
+                <button class="btn btn-primary"
+                    @click="openModal('exampleModal')"><i
+                        class="fa-solid fa-circle-plus"></i> Add
+                    Categorie(s)</button>
+
+                <span v-if="training_state === false">
+                    <button class="btn btn-success text-white"
+                        @click="trainImage()"><i class="fa-solid fa-brain"></i> Train Images</button>
+                </span>
+                <span v-else>
+                    <button class="btn btn-success text-white" type="button"
+                        disabled><i class="fa-solid fa-brain"></i> Training Images
+                        <span class="spinner-border spinner-border-sm"
+                            role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+                </span>
+
+            </div>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(object, index) in categories" :key="index">
+                        <th scope="row">[[ object.id ]]</th>
+                        <td>[[ object.category_name ]]</td>
+                        <td>
+                            <button
+                                class="btn btn-danger text-white"
+                                @click="deleteCategories(object.id)" disabled><i
+                                    class="fa-solid fa-trash"></i>
+                                Delete</button>
+                            <button class="btn btn-warning text-white"
+                                @click="filterModal(object.folder_name)"><i
+                                    class="fa-solid fa-eye"></i> View
+                                Images</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="lead fw-bold mb-0 pb-0">
+            <i class="fa-solid fa-image"></i> Add Images to Datasets
+        </p>
+
+        <p class="font-weight-light text-muted">Here you can upload and add images to selected categorie(s)</p>
+
+        <div class="col-lg-12">
+            <label class="label mb-2">Category: <span
+                    class="text-danger">*</span></label>
+            <select class="form-control mb-2">
+                <option v-for="(object, index) in categories" :key="index">
+                    [[ object.category_name ]]
+                </option>
+            </select>
+
+            <div class="input-group"><input type="file" id="fileInput"
+                    aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                    class="form-control"> <button type="button"
+                    id="inputGroupFileAddon04" class="btn btn-primary" disabled><i class="fa-solid fa-circle-plus"></i> Add to Dataset Gallery</button></div>
+
+        </div>
+    </div>
 </div>
+
+<script>
+
+
+
+
+new Vue({
+    delimiters: ["[[", "]]"],
+    el: "#datasets",
+
+    data: {
+        "categories": null,
+        "category_name": null,
+        "folder_medias": [],
+        "training_state": false
+    },
+    mounted() {
+        if (document.querySelector("#datasets")) {
+            console.log("Mounted datasets page.")
+            this.getCategories()
+        }
+    },
+    methods: {
+        showAlert(message) {
+            $('#alert-section').html(`<div class="alert alert-success alert-dismissible" role="alert">
+                <div>` + message + `</div> <button
+                    type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+                </div>`
+            )
+        },
+        async trainImage() {
+            this.training_state = true
+            var result = await axios.get(
+                "/api/cnn/train/"
+            ).then((response) => {
+                console.log(response)
+                this.training_state = false
+                this.showAlert('Training Done!')
+            })
+            .catch((error) => {
+                console.log(error);
+                this.training_state = false
+            });
+
+            
+        },
+
+        async getCategories() {
+            var result = await axios.get("/api/list-create/categories/")
+            console.log(result)
+            this.categories = result.data
+        },
+
+        async filterModal (value) {
+            var result = await axios.get("/api/get-medias/" + value + "/")
+            this.folder_medias = result.data
+            this.folder_medias = this.folder_medias.train_directory[0].files
+            openModal('showAllImages')
+        },
+        async addCategories() {
+            const csrftoken = getCookie("csrftoken");
+            axios.defaults.headers.common["X-CSRFToken"] = csrftoken;
+
+            var result = await axios.post("/api/list-create/categories/",
+            {
+                category_name: this.category_name
+            })
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            
+            this.getCategories()
+            this.category_name = ''
+            closeModal('exampleModal')
+        },
+        async deleteCategories(id) {
+            const csrftoken = getCookie("csrftoken");
+            axios.defaults.headers.common["X-CSRFToken"] = csrftoken;
+
+            var result = await axios.delete("/api/get-update-destroy/categories/" + id + "/")
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            
+            this.getCategories()
+        },
+    },
+});
+</script>
 
 {% endblock %}
